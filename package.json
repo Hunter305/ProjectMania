@@ -8,7 +8,8 @@
     "start": "node backend/server",
     "server": "nodemon backend/server",
     "client": "cd client && npm run dev",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "setup-production-app": "npm i && cd client && npm i && npm run build"
   },
   "keywords": [],
   "author": "Avinash S",

@@ -1,5 +1,5 @@
 import express from "express";
-
+import path from "path";
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -20,10 +20,6 @@ app.use(cookieParser());
 const port = process.env.PORT || 3000;
 db();
 
-app.get("/", (req, res) => {
-  res.send("app is running");
-});
-
 app.get("/test", (req, res) => {
   let a = req.cookies;
   console.log(a);
@@ -31,6 +27,16 @@ app.get("/test", (req, res) => {
 app.use("/api/users", userRoutes);
 app.use("/api/projects", projectRoute);
 app.use("/api/tasks", taskRoute);
+
+const __dirname = path.resolve();
+
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, `/client/dist`)));
+} else {
+  app.get("/", (req, res) => {
+    res.send("app is running");
+  });
+}
 
 app.use(notFound), app.use(errorHandler);
 
